@@ -110,16 +110,6 @@
                 (set (make-local-variable 'company-backends) '(company-go))
                 (company-mode))))
 
-;; Adicionar en la sección :config de `go-mode`
-(add-hook 'go-mode-hook #'setup-go-mode-compile)
-
-;; adicionar en el mismo archivo
-
-(defun setup-go-mode-compile ()
-  ; Customize compile command to run go build
-  (if (not (string-match "go" compile-command))
-      (set (make-local-variable 'compile-command)
-           "go build -v && go test -v && go vet")))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
