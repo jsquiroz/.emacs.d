@@ -17,6 +17,9 @@
 ;; Disabled backup files
 (setq make-backup-files nil)
 
+;; Show line number
+(global-display-line-numbers-mode)
+
 ;;
 ;; Package managment
 ;;
