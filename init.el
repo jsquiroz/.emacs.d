@@ -28,7 +28,7 @@
 
 ;; Add `melpa` to `package-archives`.
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+             '("melpa" . "https://stable.melpa.org/packages/") t)
 
 (when (not (package-installed-p 'use-package))
   (package-refresh-contents)
@@ -113,6 +113,13 @@
                 (set (make-local-variable 'company-backends) '(company-go))
                 (company-mode))))
 
+;; Theme nord
+(use-package nord-theme
+  :ensure t
+  :config
+  (load-theme 'nord t)
+)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -120,7 +127,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
+    (nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
