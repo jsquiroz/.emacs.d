@@ -20,6 +20,9 @@
 ;; Show line number
 (global-display-line-numbers-mode)
 
+;; set font
+(set-frame-font "Monaco" nil t)
+
 ;;
 ;; Package managment
 ;;
