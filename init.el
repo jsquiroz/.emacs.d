@@ -22,7 +22,7 @@
 
 ;; set font
 (set-frame-font "Monaco" nil t)
-
+(set-face-attribute 'default nil :height 160)
 ;;
 ;; Package managment
 ;;
