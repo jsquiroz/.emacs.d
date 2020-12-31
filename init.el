@@ -22,7 +22,7 @@
 
 ;; set font
 (set-frame-font "Monaco" nil t)
-(set-face-attribute 'default nil :height 160)
+(set-face-attribute 'default nil :height 150)
 ;;
 ;; Package managment
 ;;
@@ -63,6 +63,14 @@
 
 (when window-system (set-exec-path-from-shell-PATH))
 
+(use-package all-the-icons)
+
+(use-package neotree
+  :ensure t
+  :commands (neotree-toggle)
+  :config
+  (global-set-key [f8] 'neotree-toggle)
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 (use-package lsp-mode
   :ensure t
@@ -117,23 +125,54 @@
                 (company-mode))))
 
 ;; Theme nord
-(use-package nord-theme
+;;(use-package nord-theme
+;;  :ensure t
+;;  :config
+;;  (load-theme 'nord t)
+;;)
+
+;;(use-package vscode-dark-plus-theme
+;;  :ensure t
+;;  :config
+;;  (load-theme 'vscode-dark-plus t))
+
+
+(use-package dracula-theme
   :ensure t
   :config
-  (load-theme 'nord t)
-)
+  (load-theme 'dracula t))
+
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
+
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default)))
  '(package-selected-packages
    (quote
-    (nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
+    (dracula-theme all-the-icons neotree dired-sidebar tide js2-mode vscode-dark-plus-theme nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ 
+)
