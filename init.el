@@ -29,6 +29,15 @@
 (require 'package)
 (package-initialize)
 
+;;
+;; ido mode
+;;
+(ido-mode t)
+(ido-mode 'buffers)
+(setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*"
+	       "*Messages*" "Async Shell Command" "KILL"))
+(setq ido-file-extensions-order '(".org" ".tex" ".emacs" ".pdf" ".txt"))
+
 ;; Add `melpa` to `package-archives`.
 (add-to-list 'package-archives
              '("melpa" . "https://stable.melpa.org/packages/") t)
@@ -65,12 +74,18 @@
 
 (use-package all-the-icons)
 
-(use-package neotree
+
+(require 'smex)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; El antiguo comportamiento de M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+(use-package ido-vertical-mode
   :ensure t
-  :commands (neotree-toggle)
   :config
-  (global-set-key [f8] 'neotree-toggle)
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+  (ido-vertical-mode 1)
+  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down))
 
 (use-package lsp-mode
   :ensure t
@@ -142,11 +157,19 @@
   :config
   (load-theme 'dracula t))
 
-(use-package editorconfig
+
+(setq sml/theme 'respectful)
+(sml/setup)
+(setq sml/no-confirm-load-theme t)
+
+(use-package powerline
   :ensure t
   :config
-  (editorconfig-mode 1))
+  (powerline-default-theme))
 
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)))
 
 (defun setup-tide-mode ()
   (interactive)
@@ -165,14 +188,13 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default)))
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default)))
  '(package-selected-packages
    (quote
-    (dracula-theme all-the-icons neotree dired-sidebar tide js2-mode vscode-dark-plus-theme nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
+    (ido-vertical-mode smex sml smart-mode-line powerline magit dracula-theme all-the-icons neotree dired-sidebar tide js2-mode vscode-dark-plus-theme nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- 
-)
+ )
