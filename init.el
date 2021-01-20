@@ -32,15 +32,21 @@
 ;;
 ;; ido mode
 ;;
-(ido-mode t)
-(ido-mode 'buffers)
-(setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*"
-	       "*Messages*" "Async Shell Command" "KILL"))
-(setq ido-file-extensions-order '(".org" ".tex" ".emacs" ".pdf" ".txt"))
+;; (setq ido-enable-flex-matching t)
+;; (setq ido-everywhere t)
+;; (ido-mode 1)
+;; (ido-mode 'buffers)
+
+;; (setq ido-ignore-buffers '("^ " "*Completions*" "*Shell Command Output*"
+;;	       "*Messages*" "Async Shell Command" "KILL"))
+;; (setq ido-file-extensions-order '(".org" ".tex" ".emacs" ".pdf" ".txt"))
 
 ;; Add `melpa` to `package-archives`.
 (add-to-list 'package-archives
              '("melpa" . "https://stable.melpa.org/packages/") t)
+
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 
 (when (not (package-installed-p 'use-package))
   (package-refresh-contents)
@@ -158,10 +164,9 @@
   (load-theme 'dracula t))
 
 
+(setq sml/no-confirm-load-theme t)
 (setq sml/theme 'respectful)
 (sml/setup)
-(setq sml/no-confirm-load-theme t)
-
 (use-package powerline
   :ensure t
   :config
@@ -170,6 +175,79 @@
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)))
+
+
+(use-package helm
+  :ensure t
+  :init
+  (require 'helm-config)
+  :config
+  (global-set-key (kbd "M-x") #'helm-M-x)
+  (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+  (global-set-key (kbd "C-x C-f") #'helm-find-files)
+  (helm-mode 1))
+
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode))
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on))
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+
+(require 'prettier-js)
+  (setq prettier-js-args '(
+                           "--trailing-comma" "es5"
+                           "--single-quote" "true"
+                           "--print-width" "120"
+                           "--tab-width" "4"
+                           "--use-tabs" "false"
+                           "--jsx-bracket-same-line" "false"
+                           "--stylelint-integration" "true"
+                           ))
+
+(use-package smartparens
+  :ensure t
+  :init
+  (smartparens-global-mode))
+
+
+(use-package js2-mode
+  :ensure t)
+
+(use-package rjsx-mode
+  :ensure t
+  :mode(("\\.js\\'" . rjsx-mode)
+        ("\\.jsx\\'" . rjsx-mode))
+  :init
+  (add-hook 'rjsx-mode-hook 'prettier-js-mode)
+  (add-hook 'rjsx-mode-hook 'tide-mode))
+
+(use-package tide
+  :ensure t
+  :mode(("\\.ts\\'" . typescript-mode))
+  :init
+  (add-hook 'typescript-mode-hook 'tide-mode)
+  (add-hook 'typescript-mode-hook 'prettier-js-mode)
+  :config
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save-mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(use-package json-mode
+  :ensure t)
+
 
 (defun setup-tide-mode ()
   (interactive)
@@ -188,10 +266,10 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default)))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default)))
  '(package-selected-packages
    (quote
-    (ido-vertical-mode smex sml smart-mode-line powerline magit dracula-theme all-the-icons neotree dired-sidebar tide js2-mode vscode-dark-plus-theme nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
+    (json-mode rjsx-mode smartparens prettier-js which-key helm-projectile projectile helm ido-vertical-mode smex sml smart-mode-line powerline magit dracula-theme all-the-icons neotree dired-sidebar tide js2-mode vscode-dark-plus-theme nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
