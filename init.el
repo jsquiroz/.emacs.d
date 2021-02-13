@@ -19,6 +19,7 @@
 
 ;; Show line number
 (global-display-line-numbers-mode)
+(setq display-line-numbers 'relative)
 
 ;; set font
 (set-frame-font "Monaco" nil t)
@@ -77,8 +78,6 @@
     (setq exec-path (split-string path-from-shell path-separator))))
 
 (when window-system (set-exec-path-from-shell-PATH))
-
-(use-package all-the-icons)
 
 
 (require 'smex)
@@ -164,9 +163,9 @@
   (load-theme 'dracula t))
 
 
-(setq sml/no-confirm-load-theme t)
-(setq sml/theme 'respectful)
-(sml/setup)
+;;(setq sml/no-confirm-load-theme t)
+;;(setq sml/theme 'respectful)
+;;(sml/setup)
 (use-package powerline
   :ensure t
   :config
@@ -265,11 +264,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default)))
+   '("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "fe1c13d75398b1c8fd7fdd1241a55c286b86c3e4ce513c4292d01383de152cb7" default))
  '(package-selected-packages
-   (quote
-    (json-mode rjsx-mode smartparens prettier-js which-key helm-projectile projectile helm ido-vertical-mode smex sml smart-mode-line powerline magit dracula-theme all-the-icons neotree dired-sidebar tide js2-mode vscode-dark-plus-theme nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp))))
+   '(json-mode rjsx-mode smartparens prettier-js which-key helm-projectile projectile helm ido-vertical-mode smex sml smart-mode-line powerline magit dracula-theme all-the-icons neotree dired-sidebar tide js2-mode vscode-dark-plus-theme nord-theme exec-path-from-shell flycheck yasnippet use-package lsp-ui go-mode company-lsp)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
